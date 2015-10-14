@@ -13,7 +13,9 @@ public class Initializer {
         ApplicationContext context = new ClassPathXmlApplicationContext(new String[]{
                      "config/spring-config.xml",
                      "config/quartz-config.xml",
-                     "config/service-config.xml"
+                     "config/service-config.xml",
+                     "config/database-config.xml",
+                     "config/entity-config.xml"
                 });
     }
 }
