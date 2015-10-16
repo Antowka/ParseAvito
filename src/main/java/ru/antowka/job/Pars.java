@@ -8,7 +8,7 @@ import ru.antowka.service.Parser;
  */
 public class Pars {
 
-    private String startPage = "http://avito.ru";
+    private String startPage = "https://m.avito.ru/moskva/nedvizhimost";
 
     @Autowired
     private Parser parser;

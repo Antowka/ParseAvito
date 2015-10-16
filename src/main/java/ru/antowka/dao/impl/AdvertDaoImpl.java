@@ -22,8 +22,6 @@ public class AdvertDaoImpl implements AdvertDao{
     @Transactional
     public void create(Advert advert) {
         try {
-
-
             Session session = hibernateSessionFactory.getSession();
             session.save(advert);
         }catch (Exception e){
