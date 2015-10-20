@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+
+    <class name="ru.antowka.entity.Setting" table="settings" lazy="true">
+
+        <id name="settingId" column="setting_id" type="java.lang.Integer">
+            <generator class="identity" />
+        </id>
+
+        <property name="settingName" column="setting_name" type="java.lang.String" />
+        <property name="settingValue" column="setting_value" type="java.lang.String" />
+    </class>
+
+</hibernate-mapping>

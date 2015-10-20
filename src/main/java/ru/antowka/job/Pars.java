@@ -8,8 +8,6 @@ import ru.antowka.service.Parser;
  */
 public class Pars {
 
-    private String startPage = "https://m.avito.ru/moskva/nedvizhimost";
-
     @Autowired
     private Parser parser;
 
@@ -17,8 +15,8 @@ public class Pars {
      * Method parse links ads from startPage and reset next start page
      */
     public void parseLinks(){
-        parser.pagesParse(startPage);
+        //parser.pagesParse();
+        parser.advertParse();
         System.out.println("Iteration quartz!");
-
     }
 }

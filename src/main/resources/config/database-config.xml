@@ -19,6 +19,7 @@
               <property name="mappingResources">
                      <list>
                             <value>orm/adverts.hbm.xml</value>
+                            <value>orm/setting.orm.xml</value>
                      </list>
               </property>
 

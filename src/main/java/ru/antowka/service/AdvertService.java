@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import ru.antowka.dao.AdvertDao;
 import ru.antowka.entity.Advert;
 
+import java.util.List;
+
 /**
  * Created by Anton Nik on 13.10.15.
  */
@@ -16,5 +18,13 @@ public class AdvertService {
 
     public void addAds(Advert advert){
         advertDao.create(advert);
+    }
+
+    public void updateAdvert(Advert advert){
+        advertDao.update(advert);
+    }
+
+    public List<Advert> getAdverts(int lastAdvertId, int offset){
+        return advertDao.getAdverts(lastAdvertId, offset);
     }
 }

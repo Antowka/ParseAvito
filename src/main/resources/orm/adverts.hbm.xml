@@ -14,6 +14,11 @@
         <property name="description" column="description" type="java.lang.String" />
         <property name="link" column="link" type="java.lang.String" />
         <property name="date" column="date" type="java.lang.String" />
+        <property name="name" column="user_name" type="java.lang.String" />
+        <property name="agency" column="agency" type="java.lang.String" />
+        <property name="city" column="city" type="java.lang.String" />
+        <property name="phone" column="phone" type="java.lang.String" />
+        <property name="category" column="category" type="java.lang.String" />
     </class>
 
 </hibernate-mapping>

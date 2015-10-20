@@ -4,5 +4,6 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
        <bean id="advert" class="ru.antowka.entity.Advert" scope="prototype" />
+       <bean id="setting" class="ru.antowka.entity.Setting" scope="prototype" />
 
 </beans>

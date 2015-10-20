@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import ru.antowka.entity.Advert;
+import ru.antowka.entity.Setting;
 
 import javax.lang.model.element.Element;
 import java.io.IOException;
@@ -29,17 +30,19 @@ public class Parser {
     @Autowired
     private Advert advert;
 
-    @Async
-    public void pagesParse(String url){
+    @Autowired
+    private SettingService settingService;
 
-        //set last page for parsing
-        if(lastPageUrl != null){
-            url = lastPageUrl;
-        }
+    /**
+     * Parse list links on adverts
+     */
+    @Async
+    public void pagesParse(){
 
         try {
 
-            doc = Jsoup.connect(url).get();
+            Setting setting = settingService.getSetting(1);
+            doc = Jsoup.connect(setting.getSettingValue()).get();
 
             //get list links on adverts
             doc.select(".item-link").stream().forEach(element -> {
@@ -53,10 +56,46 @@ public class Parser {
             //get new page with list links on adverts
             lastPageUrl = doc.select(".page-next a").attr("href");
 
-            System.out.println(doc.title());
+            //save to DB next pars page
+            setting.setSettingValue("https://m.avito.ru" + lastPageUrl);
+            settingService.setSetting(setting);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Pars all data from advert
+     */
+    @Async
+    public void advertParse(){
+
+        Setting setting = settingService.getSetting(2);
+        Integer advertId = Integer.parseInt(setting.getSettingValue());
+        List<Advert> adverts = advertService.getAdverts(advertId, 2);
+
+        adverts.stream().forEach(advert -> {
+
+            try {
+                doc = Jsoup.connect("https://m.avito.ru" + advert.getLink()).get();
+
+                advert.setTitle(doc.select(".text-main").text());
+                advert.setDescription(doc.select(".description-preview-wrapper p").text());
+                advert.setCity(doc.select(".avito-address-text").text());
+                advert.setName(doc.select(".person-name").text());
+                advert.setAgency(doc.select(".person-name .info-text").text());
+                advert.setCategory(doc.select(".param-last").text());
+                advertService.updateAdvert(advert);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+        Advert advertLast = adverts.stream().reduce((previous, current) -> current).get();
+        setting.setSettingValue(Integer.toString(advertLast.getAdvertId()));
+
+        settingService.setSetting(setting);
     }
 }
